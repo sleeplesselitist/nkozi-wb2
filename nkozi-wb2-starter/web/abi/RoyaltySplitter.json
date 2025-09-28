@@ -1,0 +1,69 @@
+[
+  {
+    "type": "function",
+    "name": "split",
+    "stateMutability": "payable",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "artistBps",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "uint16"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "artist",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "platform",
+    "stateMutability": "view",
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "address"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "Split",
+    "inputs": [
+      {
+        "name": "payer",
+        "type": "address",
+        "indexed": true
+      },
+      {
+        "name": "weiAmount",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "artistWei",
+        "type": "uint256",
+        "indexed": false
+      },
+      {
+        "name": "platformWei",
+        "type": "uint256",
+        "indexed": false
+      }
+    ],
+    "anonymous": false
+  }
+]
