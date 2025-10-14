@@ -1,6 +1,98 @@
-## Hackathon Metrics (World Build II)
+# Nkozi World Build 2 (nkozi-wb2)
 
-- **Uses World Wallet:** Yes — supports World App WalletAuth on `/login` (desktop mock fallback included).
-- **Uses Proof of Human:** Yes — World ID Verify (Orb) flow on `/login`. For MVP we accept the payload server‑side to set `verified=true`; plan to swap to Cloud Verifier post‑submission.
-- **Uses both together:** Yes — verified humans can upload/play and earn simulated WLD (+0.3 per qualified listen, daily cap); users can tip artists; flows depend on wallet + verification state.
-- **Leverages World’s unique aspects:** Human‑verified attention (anti‑sybil) + wallet‑native payouts enable fair, global music discovery.# nkozi-wb2
+A human-verified music discovery mini-app (World Build II) combining World Wallet auth and World ID verification so verified listeners can discover and tip artists with wallet-native payouts. This README is a high-level overview — for developer setup and detailed steps see the nkozi-wb2-starter/README.md.
+
+Quick overview
+- Project: nkozi-wb2 (Nkozi — World Build II, hackathon MVP)
+- Goal: Enable fair music discovery and micro-payouts to creators by combining proof-of-human with wallet-native payments.
+- Languages: TypeScript (frontend/backend), Solidity (contracts)
+
+Why it matters
+- Anti-sybil verification via World ID improves signal quality for discovery and reduces bot manipulation.
+- Wallet-native payouts (World Wallet / simulated WLD) enable low-friction tipping and creator monetization.
+- Use cases: creator tipping, verified listening rewards, artist discovery, demo for Web3 music primitives.
+
+What’s inside
+- web/ — Next.js frontend (App Router) with JSON-backed APIs and minimal pages
+- contracts/ — Solidity payment & royalty splitter contracts
+- nkozi-wb2-starter/ — detailed developer README, demo steps, env examples, and scripts
+- docs/ — add architecture diagram here (docs/architecture.png) and any evaluation artifacts
+- demo/ — screenshots or short GIFs for the README and LinkedIn links
+- README.md — this file
+
+Quickstart (high level)
+1) Clone
+```bash
+git clone git@github.com:sleeplesselitist/nkozi-wb2.git
+cd nkozi-wb2
+```
+
+2) Install deps (root and workspace-specific)
+```bash
+# From repo root
+npm install           # or pnpm install / yarn
+# For contracts
+cd contracts && npm install
+# For web
+cd ../web && npm install
+```
+
+3) Environment
+- Copy example env files and set keys (World API keys, RPC URL, PRIVATE_KEY if needed)
+```
+cp .env.example .env
+cp contracts/.env.example contracts/.env
+cp web/.env.example web/.env
+# Edit values in .env files
+```
+
+4) Run locally
+```bash
+# Example: run frontend dev server
+cd web
+npm run dev
+# If you use Hardhat for contracts
+cd ../contracts
+npx hardhat node
+npx hardhat test
+```
+
+Demo / Definition of Done (high-level)
+- /upload page: enter an address, click 'Mock Login + Verify' -> sets verified=true (MVP behavior)
+- /feed page: play a track (>=30s) -> simulated +0.3 WLD toast; users can tip and comment
+- /dashboard: view accrued simulated WLD and remaining daily cap
+- Notes: rewards are simulated and persisted to JSON in web/data/*.json for the demo; caps controlled by env REWARD_PER_LISTEN_WLD and DAILY_CAP_WLD
+
+Architecture (summary)
+- Flow: User (browser) -> World Wallet sign-in -> World ID verify (Orb) -> Frontend -> Backend/API -> Smart Contracts (Payment / RoyaltySplitter)
+- Suggested diagram: docs/architecture.png (frontend, backend, chain, Cloud Verifier)
+- Key modules (examples):
+  - web/src/auth.ts — wallet auth + verify flows
+  - web/src/payouts.ts — payout orchestration (simulate or call contract)
+  - contracts/Payment.sol & contracts/RoyaltySplitter.sol
+
+Evals (lightweight)
+- Rubric examples:
+  - Proof-of-human: login & proof flow works end-to-end
+  - Payout correctness: simulated WLD accounting matches demo events
+  - UX: verified state is visible and actions (upload, tip, play) work reliably
+- Add sample test results into docs/evals.md if you run test scenarios
+
+Roadmap / next milestones
+- ◻ Integrate Cloud Verifier for production World ID verification
+- ◻ Persist rewards to an on‑chain or secure backend store (beyond demo JSON)
+- ◻ Add on‑chain receipts and gas optimization for Payment.sol
+- Good‑first issue: add a runnable seed script to pre‑populate demo tracks and sample users
+
+Topics (add to GitHub About → Topics)
+web3, world-wallet, world-id, music, payments, hardhat, typescript
+
+License
+MIT — include LICENSE file at repo root
+
+Pointers for LinkedIn / resume
+- Use this one-line on your resume: "Nkozi — human‑verified music discovery & wallet-native tipping (World Wallet + World ID)" with a direct link to https://github.com/sleeplesselitist/nkozi-wb2
+- Pin the repo on your GitHub profile so it appears at the top of your profile page for recruiters
+
+Notes about README files in this repo
+- Keep the detailed developer README at nkozi-wb2-starter/README.md (it contains the step-by-step dev Quickstart and demo steps). The root README should be the high-level project overview used for LinkedIn/resume links.
