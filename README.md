@@ -1,4 +1,4 @@
-# Nkozi — World Build 2 (nkozi-wb2)
+# NKOZI — World Build 2 (nkozi-wb2)
 
 Status: MVP / hackathon demo  
 A human-verified music discovery mini-app combining World Wallet auth and World ID verification so verified listeners can discover and tip artists with wallet-native payouts.
